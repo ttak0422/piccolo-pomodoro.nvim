@@ -131,8 +131,8 @@ Timer.stop = function(self)
     -- ignore
     return
   end
-
   self.timer:stop()
+  self.duration = math.max(self.duration - (os.time() - self.timer_started_at), 0)
   self.state = Type.TIMER_STATE.PAUSE
 end
 
