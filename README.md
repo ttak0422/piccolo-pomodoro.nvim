@@ -48,7 +48,7 @@ require("piccolo-pomodoro").setup({
   ---@field timer_state TimerState
   ---@type fun(ctx: PomodoroFocusContext):string
   focus_format = function(ctx)
-    return string.format("ﲊ focus %02d:%02d:%02d", ctx.h, ctx.m, ctx.s)
+    return string.format("ﲊ focus %02d:%02d", ctx.m, ctx.s)
   end,
 
   ---@class PomodoroBreakContext
@@ -60,7 +60,7 @@ require("piccolo-pomodoro").setup({
   ---@field timer_state TimerState
   ---@type fun(ctx: PomodoroBreakContext):string
   break_format = function(ctx)
-    return string.format("ﲊ break %02d:%02d:%02d", ctx.h, ctx.m, ctx.s)
+    return string.format("ﲊ break %02d:%02d", ctx.m, ctx.s)
   end,
 })
 
