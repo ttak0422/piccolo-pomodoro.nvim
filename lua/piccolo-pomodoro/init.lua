@@ -4,41 +4,50 @@ local Config = require("piccolo-pomodoro.config")
 local Timer = require("piccolo-pomodoro.timer")
 local Type = require("piccolo-pomodoro.type")
 
----@type Timer
-local timer = nil
+---@type fun(): Timer
+local timer = (function()
+  local instance = nil
+  return function()
+    if instance ~= nil then
+      return instance
+    else
+      instance = Timer.new(Config.options)
+      return instance
+    end
+  end
+end)()
 
 -- setup.
 M.setup = function(opts)
   Config.setup(opts)
-  timer = Timer.new(Config.options)
 end
 
 -- start pomodoro.
 M.start = function()
-  timer:start()
+  timer():start()
   Config.options.on_start()
 end
 
 -- pause pomodoro.
 M.pause = function()
-  timer:stop()
+  timer():stop()
   Config.options.on_pause()
 end
 
 -- toggle pomodoro.
 M.toggle = function()
-  local status = timer:status()
+  local status = timer():status()
   if status.timer_state == Type.TIMER_STATE.ACTIVE then
-    timer:stop()
+    timer():stop()
   else
-    timer:start()
+    timer():start()
   end
 end
 
 -- get status.
 ---@return string
 M.status = function()
-  local status = timer:status()
+  local status = timer():status()
   if status.timer_mode == Type.TIMER_MODE.FOCUS then
     return Config.options.focus_format({
       h = status.h,
