@@ -20,14 +20,45 @@ require("piccolo-pomodoro").setup({
   long_break_interval = 4,
   auto_start_breaks = false,
   auto_start_pomodoros = false,
+
+  ---@type fun()
   on_start = function() end,
+
+  ---@type fun()
   on_update = function() end,
+
+  ---@type fun()
   on_pause = function() end,
+
+  ---@class PomodoroFocusCompleteContext
+  ---@type fun(ctx: PomodoroFocusCompleteContext)
   on_complete_focus_time = function() end,
+
+  ---@class PomodoroBreakCompleteContext
+  ---@field is_long_break boolean
+  ---@type fun(ctx: PomodoroBreakCompleteContext)
   on_complete_break_time = function() end,
+
+  ---@class PomodoroFocusContext
+  ---@field h integer
+  ---@field m integer
+  ---@field s integer
+  ---@field cycles integer
+  ---@field timer_mode TimerMode
+  ---@field timer_state TimerState
+  ---@type fun(ctx: PomodoroFocusContext):string
   focus_format = function(ctx)
     return string.format("ﲊ focus %02d:%02d:%02d", ctx.h, ctx.m, ctx.s)
   end,
+
+  ---@class PomodoroBreakContext
+  ---@field h integer
+  ---@field m integer
+  ---@field s integer
+  ---@field is_long_break boolean
+  ---@field timer_mode TimerMode
+  ---@field timer_state TimerState
+  ---@type fun(ctx: PomodoroBreakContext):string
   break_format = function(ctx)
     return string.format("ﲊ break %02d:%02d:%02d", ctx.h, ctx.m, ctx.s)
   end,
