@@ -38,9 +38,9 @@ end
 M.toggle = function()
   local status = timer():status()
   if status.timer_state == Type.TIMER_STATE.ACTIVE then
-    timer():stop()
+    M.pause()
   else
-    timer():start()
+    M.start()
   end
 end
 
