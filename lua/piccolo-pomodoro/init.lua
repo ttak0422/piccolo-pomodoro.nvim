@@ -44,6 +44,16 @@ M.toggle = function()
   end
 end
 
+-- reset current session.
+M.reset = function()
+  timer():reset()
+end
+
+-- skip current session.
+M.skip = function()
+  timer():skip()
+end
+
 -- get status.
 ---@return string
 M.status = function()
