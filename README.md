@@ -70,4 +70,6 @@ require("piccolo-pomodoro").pause()        -- pause pomodoro timer
 require("piccolo-pomodoro").toggle()       -- toggle start/pause
 require("piccolo-pomodoro").print_status() -- print pomodoro status
 require("piccolo-pomodoro").status()       -- get pomodoro status string
+require("piccolo-pomodoro").reset()        -- reset current session
+require("piccolo-pomodoro").skip()         -- skip current session
 ```

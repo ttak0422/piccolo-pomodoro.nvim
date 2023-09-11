@@ -77,29 +77,7 @@ end
 Timer.update = function(self)
   self.left_seconds = math.max(self.duration - (os.time() - self.timer_started_at), 0)
   if self.left_seconds <= 0 then
-    local current_mode = self.mode
-
-    self:stop()
-
-    if current_mode == Type.TIMER_MODE.FOCUS then
-      self.on_complete_focus_time({})
-      if self.cycle % self.long_break_interval == 0 then
-        self:set_mode(Type.TIMER_MODE.LONG_BREAK)
-      else
-        self:set_mode(Type.TIMER_MODE.BREAK)
-      end
-      if self.auto_start_breaks then
-        self:start()
-      end
-    else
-      self.on_complete_break_time({ is_long_break = self.mode == Type.TIMER_MODE.LONG_BREAK })
-      self.cycle = self.cycle + 1
-      self.mode = Type.TIMER_MODE.FOCUS
-      self:set_mode(Type.TIMER_MODE.FOCUS)
-      if self.auto_start_pomodoros then
-        self:start()
-      end
-    end
+    self:next()
   end
 end
 
@@ -150,6 +128,48 @@ Timer.status = function(self)
     timer_mode = self.mode,
     timer_state = self.state,
   }
+end
+
+
+-- reset current session.
+---@param self Timer
+Timer.reset = function(self)
+    self:stop()
+    self:set_mode(self.mode)
+end
+
+-- skip current session.
+---@param self Timer
+Timer.skip = function(self)
+  self:next()
+end
+
+-- move to next session.
+---@param self Timer
+Timer.next = function(self)
+    local current_mode = self.mode
+
+    self:stop()
+
+    if current_mode == Type.TIMER_MODE.FOCUS then
+      self.on_complete_focus_time({})
+      if self.cycle % self.long_break_interval == 0 then
+        self:set_mode(Type.TIMER_MODE.LONG_BREAK)
+      else
+        self:set_mode(Type.TIMER_MODE.BREAK)
+      end
+      if self.auto_start_breaks then
+        self:start()
+      end
+    else
+      self.on_complete_break_time({ is_long_break = self.mode == Type.TIMER_MODE.LONG_BREAK })
+      self.cycle = self.cycle + 1
+      self.mode = Type.TIMER_MODE.FOCUS
+      self:set_mode(Type.TIMER_MODE.FOCUS)
+      if self.auto_start_pomodoros then
+        self:start()
+      end
+    end
 end
 
 return Timer
