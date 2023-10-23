@@ -50,10 +50,10 @@ M.defaults = {
   on_complete_focus_time = function() end,
   on_complete_break_time = function() end,
   focus_format = function(ctx)
-    return string.format("ﲊ focus %02d:%02d", ctx.m, ctx.s)
+    return string.format("󰞌 focus %02d:%02d", ctx.m, ctx.s)
   end,
   break_format = function(ctx)
-    return string.format("ﲊ break %02d:%02d", ctx.m, ctx.s)
+    return string.format("󰞌 break %02d:%02d", ctx.m, ctx.s)
   end,
 }
 
